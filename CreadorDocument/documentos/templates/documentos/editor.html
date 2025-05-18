@@ -1,0 +1,6 @@
+﻿<h2>Editando: {{ documento.titulo }}</h2>
+<form method="post">
+    {% csrf_token %}
+    <textarea name="contenido" rows="25" cols="100">{{ contenido }}</textarea><br>
+    <button type="submit">Guardar</button>
+</form>

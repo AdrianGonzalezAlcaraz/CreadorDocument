@@ -1,0 +1,71 @@
+﻿<!-- templates/documentos/editar_documento.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar {{ documento.titulo }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        textarea {
+            width: 100%;
+            height: 70vh;
+            padding: 15px;
+            font-size: 16px;
+            font-family: 'Courier New', monospace;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #fff;
+        }
+
+        .editor-word {
+            background-color: #ffffff;
+        }
+
+        .editor-html {
+            background-color: #f0f0ff;
+        }
+
+        .editor-css {
+            background-color: #fff0f5;
+        }
+
+        .editor-js {
+            background-color: #fffbe6;
+        }
+
+        .editor-php {
+            background-color: #f0fff0;
+        }
+
+        .botones {
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Editando: {{ documento.titulo }}.{{ documento.extension }}</h2>
+
+    {% if mensaje %}
+    <p style="color: green;">{{ mensaje }}</p>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+        <label for="titulo">Título:</label><br>
+        <input type="text" name="titulo" value="{{ documento.titulo }}" required><br><br>
+
+        <label for="contenido">Contenido:</label><br>
+        <textarea name="contenido" class="editor-{{ documento.extension|lower }}">{{ documento.contenido }}</textarea><br>
+
+        <div class="botones">
+            <button type="submit">Guardar</button>
+            <a href="{% url 'lista_documentos' %}">Volver</a>
+        </div>
+    </form>
+</body>
+</html>

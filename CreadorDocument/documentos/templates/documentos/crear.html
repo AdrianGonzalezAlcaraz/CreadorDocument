@@ -1,0 +1,146 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear Documento</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #2563eb;
+            color: white;
+            padding: 15px 30px;
+            font-size: 20px;
+        }
+
+        .contenedor {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        label {
+            display: block;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        input[type="text"], select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 300px;
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            background: #fefefe;
+        }
+
+        button {
+            background: #2563eb;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 16px;
+            margin-top: 25px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+            button:hover {
+                background: #1d4ed8;
+            }
+
+        .tipo-preview {
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #666;
+        }
+    </style>
+
+    <script>
+        function actualizarEditor() {
+            const tipo = document.getElementById('tipo').value;
+            const editor = document.getElementById('contenido');
+            let placeholder = '';
+
+            switch(tipo) {
+                case 'word':
+                case 'presentacion':
+                    placeholder = 'Escribe tu documento...';
+                    break;
+                case 'html':
+                    placeholder = '<!DOCTYPE html>\n<html>\n  <head>\n    <title>Mi HTML</title>\n  </head>\n  <body>\n    \n  </body>\n</html>';
+                    break;
+                case 'css':
+                    placeholder = 'body {\n  background-color: #fff;\n}';
+                    break;
+                case 'php':
+                    placeholder = '<?php\n\n// Código PHP aquí\n\n?>';
+                    break;
+                case 'JavaScript':
+                    placeholder = '// Tu código JavaScript aquí\nfunction saludar() {\n  alert("Hola mundo");\n}';
+                    break;
+                case 'excel':
+                    placeholder = 'Fila1, Columna1, Columna2\nDato1, Dato2, Dato3';
+                    break;
+                default:
+                    placeholder = '';
+            }
+
+            editor.value = placeholder;
+        }
+    </script>
+</head>
+<body>
+
+    <header>Crear Nuevo Documento</header>
+
+    <div class="contenedor">
+        <form method="POST">
+            {% csrf_token %}
+            <label for="titulo">Título del documento:</label>
+            <input type="text" id="titulo" name="titulo" required placeholder="Ej. Mi documento nuevo">
+
+            <label for="tipo">Tipo de documento:</label>
+            <select id="tipo" name="extension" onchange="actualizarEditor()" required>
+                <option value="">-- Selecciona un tipo --</option>
+                <option value="word">Word</option>
+                <option value="excel">Excel</option>
+                <option value="html">HTML</option>
+                <option value="css">CSS</option>
+                <option value="ppt">Presentación</option>
+                <option value="JavaScript">JavaScript</option>
+                <option value="php">PHP</option>
+            </select>
+
+            <div class="tipo-preview">Se generará un documento editable con el formato correspondiente.</div>
+
+            <label for="contenido">Contenido del documento:</label>
+            <textarea id="contenido" name="contenido" placeholder="Selecciona un tipo para comenzar..." required></textarea>
+
+            <button type="submit">Guardar Documento</button>
+        </form>
+    </div>
+
+</body>
+</html>

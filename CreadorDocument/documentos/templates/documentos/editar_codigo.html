@@ -1,0 +1,127 @@
+﻿<!--<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar {{ documento.titulo }}</title>
+    <style>
+        #editor {
+            height: 500px;
+            width: 100%;
+        }
+
+        #preview {
+            height: 500px;
+            width: 100%;
+            border: 1px solid #ccc;
+            margin-top: 10px;
+        }
+
+        body {
+            font-family: Arial;
+            margin: 20px;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js"></script>
+</head>
+<body>
+    <h2>Editando: {{ documento.titulo }}.{{ documento.extension }}</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <div id="editor">{{ contenido }}</div>
+        <textarea name="contenido" id="contenido" hidden></textarea>
+        <button type="submit">Guardar</button>
+    </form>
+
+    {% if documento.extension == "html" %}
+    <h3>Previsualización</h3>
+    <iframe id="preview"></iframe>
+    {% endif %}
+
+    <script>
+        const editor = ace.edit("editor");
+        editor.setTheme("ace/theme/monokai");
+        editor.session.setMode("ace/mode/{{ documento.extension }}");
+
+        const textarea = document.getElementById("contenido");
+        document.querySelector("form").addEventListener("submit", () => {
+            textarea.value = editor.getValue();
+        });
+
+        {% if documento.extension == "html" %}
+        // Previsualización en vivo
+        const preview = document.getElementById("preview");
+        editor.session.on('change', () => {
+            preview.srcdoc = editor.getValue();
+        });
+        preview.srcdoc = editor.getValue();
+        {% endif %}
+    </script>
+</body>
+</html>-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar {{ documento.titulo }}</title>
+    <style>
+        body {
+            font-family: Arial;
+            margin: 20px;
+        }
+
+        .editor-container {
+            display: flex;
+            gap: 20px;
+        }
+
+        #editor, #preview {
+            height: 500px;
+            width: 100%;
+            flex: 1;
+        }
+
+        #preview {
+            border: 1px solid #ccc;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js"></script>
+</head>
+<body>
+    <h2>Editando: {{ documento.titulo }}.{{ documento.extension }}</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="editor-container">
+            <div id="editor">{{ contenido }}</div>
+
+            {% if documento.extension == "html" %}
+            <iframe id="preview"></iframe>
+            {% endif %}
+        </div>
+
+        <textarea name="contenido" id="contenido" hidden></textarea>
+        <br>
+        <button type="submit">Guardar</button>
+    </form>
+
+    <script>
+        const editor = ace.edit("editor");
+        editor.setTheme("ace/theme/monokai");
+        editor.session.setMode("ace/mode/{{ documento.extension }}");
+
+        const textarea = document.getElementById("contenido");
+        document.querySelector("form").addEventListener("submit", () => {
+            textarea.value = editor.getValue();
+        });
+
+        {% if documento.extension == "html" %}
+        const preview = document.getElementById("preview");
+        editor.session.on('change', () => {
+            preview.srcdoc = editor.getValue();
+        });
+        preview.srcdoc = editor.getValue();
+        {% endif %}
+    </script>
+</body>
+</html>
+

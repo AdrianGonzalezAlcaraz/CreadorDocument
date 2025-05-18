@@ -1,0 +1,86 @@
+﻿<!--<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Iniciar sesion</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial;
+            margin-top: 50px;
+        }
+
+        input, button {
+            margin: 10px;
+            padding: 10px;
+            width: 300px;
+        }
+
+        .btn {
+            background-color: black;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Iniciar sesion</h1>
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="identifier" placeholder="Escribe tu nombre o correo electronico"><br>
+        <input type="password" name="password" placeholder="Escribe tu contraseña"><br>
+        {% if error %}<p style="color:red;">{{ error }}</p>{% endif %}
+        <button class="btn" type="submit">Iniciar sesion</button><br>
+        <a href="{% url 'crear_usuario' %}"><button class="btn" type="button">Crear cuenta</button></a>
+    </form>
+</body>
+</html>-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Iniciar sesion</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial;
+            margin-top: 50px;
+        }
+
+        input, button {
+            margin: 10px;
+            padding: 10px;
+            width: 300px;
+        }
+
+        .btn {
+            background-color: black;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .google-btn {
+            background-color: #db4437;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>Iniciar sesion</h1>
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="identifier" placeholder="Escribe tu nombre o correo electronico"><br>
+        <input type="password" name="password" placeholder="Escribe tu contraseña"><br>
+        {% if error %}<p style="color:red;">{{ error }}</p>{% endif %}
+        <button class="btn" type="submit">Iniciar sesion</button><br>
+        <a href="{% url 'crear_usuario' %}"><button class="btn" type="button">Crear cuenta</button></a>
+    </form>
+
+    <!-- Botón de inicio de sesión con Google -->
+    <a href="{{ google_oauth_url }}">
+        <button class="btn google-btn" type="button">Iniciar sesión con Google</button>
+    </a>
+</body>
+</html>

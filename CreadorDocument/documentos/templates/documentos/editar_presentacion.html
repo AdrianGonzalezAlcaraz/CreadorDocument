@@ -1,0 +1,150 @@
+﻿<!--<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Presentación</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f0f0f0;
+        }
+
+        header {
+            background: #202124;
+            color: white;
+            padding: 10px 20px;
+            font-size: 18px;
+        }
+
+        .slide-container {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 20px;
+            justify-content: center;
+        }
+
+        .slide {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            width: 250px;
+        }
+
+            .slide p {
+                margin: 10px 0;
+                background: #f8f8f8;
+                padding: 8px;
+                border-radius: 5px;
+            }
+    </style>
+</head>
+<body>
+    <header>
+        Editando: {{ documento.titulo }}.{{ documento.extension }}
+    </header>
+    <div class="slide-container">
+        {% for slide in slides %}
+        <div class="slide">
+            <h4>Diapositiva {{ slide.index|add:1 }}</h4>
+            {% for texto in slide.contenido %}
+            <p>{{ texto }}</p>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>-->
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Presentación</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f0f0f0;
+        }
+
+        header {
+            background: #202124;
+            color: white;
+            padding: 10px 20px;
+            font-size: 18px;
+        }
+
+        .slide-container {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 20px;
+            justify-content: center;
+        }
+
+        .slide {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            width: 250px;
+        }
+
+            .slide p, .slide textarea {
+                margin: 10px 0;
+                background: #f8f8f8;
+                padding: 8px;
+                border-radius: 5px;
+                width: 100%;
+                border: none;
+            }
+
+        textarea {
+            resize: vertical;
+        }
+
+        .slide form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .slide button {
+            margin-top: 5px;
+            background-color: #4285F4;
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+            .slide button:hover {
+                background-color: #3367D6;
+            }
+    </style>
+</head>
+<body>
+    <header>
+        Editando: {{ documento.titulo }}.{{ documento.extension }}
+    </header>
+    <div class="slide-container">
+        {% for slide in slides %}
+        <div class="slide">
+            <h4>Diapositiva {{ slide.index|add:1 }}</h4>
+            <form method="post" action="{% url 'guardar_diapositiva' documento.id slide.index %}">
+                {% csrf_token %}
+                {% for i in slide.contenido %}
+                <textarea name="texto_{{ forloop.counter0 }}" rows="3">{{ i }}</textarea>
+                {% endfor %}
+                <button type="submit">Guardar cambios</button>
+            </form>
+            <form method="post" action="{% url 'eliminar_diapositiva' documento.id slide.index %}">
+                {% csrf_token %}
+                <button type="submit" style="background-color: #d9534f;">Eliminar diapositiva</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

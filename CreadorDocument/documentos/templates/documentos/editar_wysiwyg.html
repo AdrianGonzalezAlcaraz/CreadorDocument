@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar {{ documento.titulo }}</title>
+    <!--<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>-->
+    <script src="https://cdn.tiny.cloud/1/0q4cst6f6xxcv6sephfnf944nljze7bttqruj1xysgcl61io/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script> tinymce.init({
+            selector: '#editor' ,
+            height: 500,
+            menubar: false
+            });
+    </script>
+</head>
+<body>
+    <h2>Editando: {{ documento.titulo }}.{{ documento.extension }}</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <textarea id="editor" name="contenido">{{ contenido }}</textarea>
+        <button type="submit">Guardar</button>
+    </form>
+</body>
+</html>

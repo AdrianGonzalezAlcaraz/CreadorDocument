@@ -1,0 +1,279 @@
+﻿<!--<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Hoja de Cálculo - {{ documento.titulo }}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/luckysheet@latest/dist/plugins/css/plugins.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/luckysheet@latest/dist/css/luckysheet.css" />
+    <script src="https://cdn.jsdelivr.net/npm/luckysheet@latest/dist/plugins/js/plugin.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luckysheet@latest/dist/luckysheet.umd.js"></script>
+
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        #luckysheet {
+            margin: 0;
+            padding: 0;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+        }
+
+        #guardar-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+            padding: 10px 20px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <button id="guardar-btn">Guardar</button>
+
+    <div id="luckysheet"></div>
+
+    <script>
+        // Cargar los datos existentes desde el servidor
+        const datosGuardados = JSON.parse('{{ contenido|escapejs }}');  // De tu vista Django
+
+        luckysheet.create({
+            container: 'luckysheet',
+            data: datosGuardados.length ? datosGuardados : [
+                {
+                    name: "Hoja1",
+                    color: "",
+                    index: 0,
+                    status: 1,
+                    order: 0,
+                    celldata: [],
+                    row: 30,
+                    column: 15
+                }
+            ],
+            lang: 'es',
+        });
+
+        document.getElementById("guardar-btn").addEventListener("click", () => {
+            const data = luckysheet.getAllSheets();
+            fetch("", {
+                method: "POST",
+                headers: {
+                    "X-CSRFToken": "{{ csrf_token }}",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ contenido: JSON.stringify(data) })
+            })
+            .then(res => res.json())
+            .then(data => alert("Guardado exitosamente"))
+            .catch(err => alert("Error al guardar"));
+        });
+        document.getElementById("guardar-btn").addEventListener("click", () => {
+            const data = luckysheet.getAllSheets();  // Obtiene todos los datos de las hojas
+            fetch("", {  // Asegúrate de que esta URL esté correcta
+                method: "POST",
+                headers: {
+                    "X-CSRFToken": "{{ csrf_token }}",  // CSRF Token para proteger contra ataques CSRF
+                    "Content-Type": "application/json"  // Indicamos que el cuerpo de la solicitud es JSON
+                },
+                body: JSON.stringify({ contenido: JSON.stringify(data) })  // Datos de las hojas
+            })
+                .then(res => res.json())
+                .then(data => alert("Guardado exitosamente"))
+                .catch(err => alert("Error al guardar"));
+        });
+        fetch("{% url 'guardar_hoja_calculo' doc_id=documento.id %}", {  // Usa el URL correcto
+            method: "POST",
+            headers: {
+                "X-CSRFToken": "{{ csrf_token }}",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ contenido: JSON.stringify(data) })
+        })
+            .then(res => res.json())
+            .then(data => alert("Guardado exitosamente"))
+            .catch(err => alert("Error al guardar"));
+    </script>
+</body>
+</html>-->
+<!--<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar {{ documento.titulo }}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/luckysheet@2.1.13/dist/plugins/css/plugins.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/luckysheet@2.1.13/dist/css/luckysheet.css" />
+    <script src="https://cdn.jsdelivr.net/npm/luckysheet@2.1.13/dist/plugins/js/plugin.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luckysheet@2.1.13/dist/luckysheet.umd.js"></script>
+
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        #luckysheet {
+            margin: 0;
+            padding: 0;
+            position: absolute;
+            width: 100%;
+            height: 90%;
+            left: 0;
+            top: 10%;
+        }
+
+        .top-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 10%;
+            width: 100%;
+            padding: 10px;
+            background: #f2f2f2;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <h2>Editando: {{ documento.titulo }}.{{ documento.extension }}</h2>
+        <button id="guardar">Guardar</button>
+    </div>
+
+    <div id="luckysheet"></div>
+
+    <form method="POST" id="guardar-form">
+        {% csrf_token %}
+        <textarea name="contenido" id="contenido" hidden></textarea>
+    </form>
+
+    <script>
+        // Iniciar Luckysheet
+        luckysheet.create({
+            container: 'luckysheet',
+            lang: 'es',
+            data: {{ contenido|safe }},
+            showinfobar: false,
+            gridKey: false,
+            showtoolbar: true,
+            showformulaBar: true,
+        });
+
+        document.getElementById('guardar').addEventListener('click', function () {
+            const jsonData = JSON.stringify(luckysheet.getAllSheets());
+            document.getElementById('contenido').value = jsonData;
+            document.getElementById('guardar-form').submit();
+        });
+    </script>
+</body>
+</html>-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Hoja de Cálculo - {{ documento.titulo }}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/luckysheet@latest/dist/plugins/css/plugins.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/luckysheet@latest/dist/css/luckysheet.css" />
+    <script src="https://cdn.jsdelivr.net/npm/luckysheet@latest/dist/plugins/js/plugin.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luckysheet@latest/dist/luckysheet.umd.js"></script>
+
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        #luckysheet {
+            margin: 0;
+            padding: 0;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+        }
+
+        #guardar-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+            padding: 10px 20px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <button id="guardar-btn">Guardar</button>
+
+    <div id="luckysheet"></div>
+
+    <script>
+        // Cargar los datos existentes desde el servidor
+        const datosGuardados = JSON.parse('{{ contenido|escapejs }}');  // De tu vista Django
+
+        luckysheet.create({
+            container: 'luckysheet',
+            data: datosGuardados.length ? datosGuardados : [
+                {
+                    name: "Hoja1",
+                    color: "",
+                    index: 0,
+                    status: 1,
+                    order: 0,
+                    celldata: [],
+                    row: 30,
+                    column: 15
+                }
+            ],
+            lang: 'es',
+        });
+
+        // Evento de guardar
+        document.getElementById("guardar-btn").addEventListener("click", () => {
+            const data = luckysheet.getAllSheets();  // Obtiene todos los datos de las hojas
+
+            // Asegúrate de que la URL sea correcta y que se pase el ID del documento
+            fetch("{% url 'guardar_hoja_calculo' doc_id=documento.id %}", {
+                method: "POST",
+                headers: {
+                    "X-CSRFToken": "{{ csrf_token }}",  // CSRF Token para proteger contra ataques CSRF
+                    "Content-Type": "application/json"  // Indicamos que el cuerpo de la solicitud es JSON
+                },
+                body: JSON.stringify({ contenido: JSON.stringify(data) })  // Datos de las hojas
+            })
+            .then(res => res.json())
+            .then(data => {
+                alert("Guardado exitosamente");
+                // Redirigir a la página inicial después de guardar
+                window.location.href = "{% url 'lista_documentos' %}";  // Cambia 'lista_documentos' por la URL correcta
+            })
+            .catch(err => alert("Error al guardar"));
+        });
+    </script>
+</body>
+</html>
+
+</html>
+

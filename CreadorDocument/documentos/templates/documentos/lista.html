@@ -1,0 +1,152 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mis Documentos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f5f5f5;
+        }
+
+        header {
+            background: #444;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .filtros {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+            gap: 10px;
+        }
+
+            .filtros a {
+                text-decoration: none;
+                color: white;
+                font-weight: bold;
+                padding: 15px 20px;
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+                .filtros a.word {
+                    background: #3b82f6;
+                }
+                /* Azul */
+                .filtros a.excel {
+                    background: #22c55e;
+                }
+                /* Verde */
+                .filtros a.html {
+                    background: #b45309;
+                }
+                /* Marrón */
+                .filtros a.css {
+                    background: #06b6d4;
+                }
+                /* Celeste */
+                .filtros a.presentacion {
+                    background: #a855f7;
+                }
+                /* Morado */
+                .filtros a.javascript {
+                    background: #f59e0b;
+                }
+                /* Amarillo */
+                .filtros a.php {
+                    background: #8b5cf6;
+                }
+                /* Lila */
+                .filtros a.crear {
+                    background: #000000;
+                }
+        /* Negro */
+
+        .documentos {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .documento {
+            background: white;
+            width: 180px;
+            margin: 10px;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            text-align: center;
+            transition: transform 0.2s ease-in-out;
+        }
+
+            .documento:hover {
+                transform: scale(1.05);
+            }
+
+            .documento a {
+                text-decoration: none;
+                color: #333;
+                font-weight: bold;
+            }
+
+        .no-docs {
+            text-align: center;
+            padding: 30px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h2>Mis Documentos</h2>
+    </header>
+
+    <div class="filtros">
+        <a href="{% url 'lista_documentos' %}" class="crear" style="background: #6b7280;">Ver Todos</a>
+        <a href="?tipo=word" class="word">Filtrar Word</a>
+        <a href="?tipo=excel" class="excel">Filtrar Excel</a>
+        <a href="?tipo=html" class="html">Filtrar HTML</a>
+        <a href="?tipo=css" class="css">Filtrar CSS</a>
+        <a href="?tipo=ppt" class="presentacion">Filtrar Presentación</a>
+        <a href="?tipo=JavaScript" class="javascript">Filtrar JavaScript</a>
+        <a href="?tipo=php" class="php">Filtrar PHP</a>
+        <a href="{% url 'crear_documento' %}" class="crear">+ Crear Documento</a>
+    </div>
+
+    <div class="documentos">
+        {% for documento in documentos %}
+        <div class="documento">
+            <a href="{% url 'editar_documento' doc_id=documento.id %}">
+                <p>{{ documento.titulo }}.{{ documento.extension }}</p>
+            </a>
+            <form action="{% url 'exportar_a_drive' documento.id %}" method="post" style="margin-bottom: 8px;">
+                {% csrf_token %}
+                <button type="submit" style="background:#2563eb; color:white; border:none; padding:8px 12px; border-radius:6px; cursor:pointer;">
+                    Exportar a Drive
+                </button>
+            </form>
+            <!-- Botón o enlace para descargar -->
+            <a href="{{ documento.archivo_path.url }}" download style="display:inline-block; background:#10b981; color:white; padding:8px 12px; border-radius:6px; text-decoration:none; font-weight:bold; cursor:pointer;">
+                Descargar
+            </a>
+            <form action="{% url 'borrar_documento' documento.id %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" style="background:#ef4444; color:white; border:none; padding:8px 12px; border-radius:6px; cursor:pointer;">
+                    Borrar
+                </button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
+
