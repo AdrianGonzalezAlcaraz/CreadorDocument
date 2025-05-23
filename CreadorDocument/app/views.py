@@ -141,7 +141,7 @@ def oauth2callback(request):
     flow = Flow.from_client_secrets_file(
         settings.CLIENT_SECRET_FILE,
         scopes=settings.GOOGLE_OAUTH_SCOPES,
-        redirect_uri="http://localhost:8000/oauth2callback/"
+        redirect_uri="https://creadordocument.onrender.com/oauth2callback/"
     )
 
     # Evita el warning de "Scope has changed"
