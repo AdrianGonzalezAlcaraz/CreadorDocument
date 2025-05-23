@@ -1,6 +1,8 @@
 ﻿"""
 Definition of views.
 """
+from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
 import json
 from urllib.parse import urlencode
 from datetime import datetime
@@ -63,6 +65,8 @@ def about(request):
 
 
 def login_view(request):
+    if request.user.is_authenticated:
+        return redirect('lista_documentos')
     form = LoginForm(request.POST or None)
     error = None
 
@@ -75,7 +79,7 @@ def login_view(request):
             "redirect_uri": "http://localhost:8000/oauth2callback/",
             "scope": " ".join(settings.GOOGLE_OAUTH_SCOPES),
             "access_type": "offline",
-            "prompt": "consent",
+            "prompt": "select_account",
         })
     )
 
@@ -151,7 +155,7 @@ def oauth2callback(request):
         flow.fetch_token(code=code)
 
     credentials = flow.credentials
-
+    request.session['google_credentials'] = credentials.to_json()
     if not credentials or not credentials.id_token:
         return HttpResponse("No se pudo obtener el id_token.")
 
@@ -206,3 +210,20 @@ def oauth2callback(request):
     user.save()
     login(request, user)
     return redirect('lista_documentos')  # o la URL de tu elección
+def inicio(request):
+    return render(request, 'app/login.html')
+
+
+@login_required
+def configurar_sesion(request):
+    usuario_email = request.user.email if request.user.is_authenticated else 'No conectado'
+    return render(request, 'app/configurar_sesion.html', {'usuario_email': usuario_email})
+
+@login_required
+def desconectar_google(request):
+    if 'google_credentials' in request.session:
+        del request.session['google_credentials']
+
+    # Cierra la sesión de Django
+    logout(request)
+    return redirect('inicio')

@@ -1,41 +1,4 @@
-﻿<!--<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Iniciar sesion</title>
-    <style>
-        body {
-            text-align: center;
-            font-family: Arial;
-            margin-top: 50px;
-        }
-
-        input, button {
-            margin: 10px;
-            padding: 10px;
-            width: 300px;
-        }
-
-        .btn {
-            background-color: black;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-    </style>
-</head>
-<body>
-    <h1>Iniciar sesion</h1>
-    <form method="post">
-        {% csrf_token %}
-        <input type="text" name="identifier" placeholder="Escribe tu nombre o correo electronico"><br>
-        <input type="password" name="password" placeholder="Escribe tu contraseña"><br>
-        {% if error %}<p style="color:red;">{{ error }}</p>{% endif %}
-        <button class="btn" type="submit">Iniciar sesion</button><br>
-        <a href="{% url 'crear_usuario' %}"><button class="btn" type="button">Crear cuenta</button></a>
-    </form>
-</body>
-</html>-->
+﻿
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -43,27 +6,126 @@
     <title>Iniciar sesion</title>
     <style>
         body {
+            font-family: 'Roboto', Arial, sans-serif;
+            background-color: #ffffff; /* fondo general blanco */
+            color: #212529; /* texto principal */
             text-align: center;
-            font-family: Arial;
-            margin-top: 50px;
+            margin: 50px 15px;
+            font-size: 16px;
+            line-height: 1.5;
         }
 
-        input, button {
-            margin: 10px;
-            padding: 10px;
+        /* Título */
+        h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 30px;
+        }
+
+        /* Formulario inputs y botones */
+        input[type="text"],
+        input[type="password"],
+        button {
+            display: block;
+            margin: 10px auto;
+            padding: 12px 15px;
             width: 300px;
+            max-width: 90%;
+            font-size: 16px;
+            border-radius: 6px;
+            border: 1px solid #6c757d; /* gris oscuro */
+            color: #212529;
+            font-family: 'Roboto', Arial, sans-serif;
+            transition: border-color 0.3s;
         }
 
-        .btn {
-            background-color: black;
+            input[type="text"]:focus,
+            input[type="password"]:focus {
+                outline: none;
+                border-color: #007bff; /* azul primario */
+                box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            }
+
+        /* Botones */
+        button {
+            background-color: #007bff; /* azul primario */
             color: white;
+            font-weight: 700;
             border: none;
             cursor: pointer;
+            transition: background-color 0.3s;
+            user-select: none;
         }
 
+            button:hover,
+            button:focus {
+                background-color: #0056b3;
+                outline: none;
+            }
+
+            button:focus-visible {
+                outline: 3px solid #0056b3;
+            }
+
+        /* Botón Google */
         .google-btn {
-            background-color: #db4437;
-            color: white;
+            background-color: #db4437; /* rojo Google */
+            font-weight: 700;
+        }
+
+            .google-btn:hover,
+            .google-btn:focus {
+                background-color: #a33227;
+                outline: none;
+            }
+
+            .google-btn:focus-visible {
+                outline: 3px solid #a33227;
+            }
+
+        /* Mensajes de error */
+        .error-message {
+            color: #dc3545; /* rojo bootstrap */
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        /* Responsive Tablets */
+        @media (max-width: 768px) {
+            body {
+                margin: 40px 10px;
+                font-size: 15px;
+            }
+
+            h1 {
+                font-size: 22px;
+            }
+
+            input[type="text"],
+            input[type="password"],
+            button {
+                width: 100%;
+            }
+        }
+
+        /* Responsive Móviles */
+        @media (max-width: 576px) {
+            body {
+                margin: 30px 5px;
+                font-size: 14px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            input[type="text"],
+            input[type="password"],
+            button {
+                width: 100%;
+                padding: 10px 12px;
+                font-size: 14px;
+            }
         }
     </style>
 </head>
@@ -71,16 +133,14 @@
     <h1>Iniciar sesion</h1>
     <form method="post">
         {% csrf_token %}
-        <input type="text" name="identifier" placeholder="Escribe tu nombre o correo electronico"><br>
+        <!--<input type="text" name="identifier" placeholder="Escribe tu nombre o correo electronico"><br>
         <input type="password" name="password" placeholder="Escribe tu contraseña"><br>
         {% if error %}<p style="color:red;">{{ error }}</p>{% endif %}
         <button class="btn" type="submit">Iniciar sesion</button><br>
-        <a href="{% url 'crear_usuario' %}"><button class="btn" type="button">Crear cuenta</button></a>
+        <a href="{% url 'crear_usuario' %}"><button class="btn" type="button">Crear cuenta</button></a>-->
     </form>
 
     <!-- Botón de inicio de sesión con Google -->
-    <a href="{{ google_oauth_url }}">
-        <button class="btn google-btn" type="button">Iniciar sesión con Google</button>
-    </a>
+    <button class="btn google-btn" type="button" onclick="window.location.href='{{ google_oauth_url }}'">Iniciar sesión con Google</button>
 </body>
 </html>

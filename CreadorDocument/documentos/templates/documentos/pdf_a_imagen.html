@@ -1,0 +1,138 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            background-color: #f8f9fa; /* fondo secciones/entradas */
+            color: #212529; /* texto principal */
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            font-weight: bold;
+            font-size: 22px; /* entre 18-24px */
+            color: #212529;
+        }
+
+        .card {
+            background-color: #ffffff; /* fondo general */
+            border-radius: 10px;
+        }
+
+        label.form-label {
+            font-weight: 500;
+            font-size: 14px;
+            color: #212529;
+        }
+
+        input.form-control {
+            background-color: #f8f9fa;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            font-size: 14px;
+            color: #212529;
+        }
+
+            input.form-control:focus {
+                border-color: #007bff;
+                box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+                outline: none;
+            }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            font-weight: bold;
+            font-size: 16px;
+            border-radius: 8px;
+            transition: background-color 0.2s ease-in-out;
+        }
+
+            .btn-primary:hover,
+            .btn-primary:focus {
+                background-color: #0056b3;
+                border-color: #0056b3;
+                outline: none;
+                box-shadow: 0 0 0 0.3rem rgba(0,123,255,.5);
+            }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+            font-weight: bold;
+            font-size: 16px;
+            border-radius: 8px;
+            transition: background-color 0.2s ease-in-out;
+        }
+
+            .btn-secondary:hover,
+            .btn-secondary:focus {
+                background-color: #565e64;
+                border-color: #565e64;
+                outline: none;
+                box-shadow: 0 0 0 0.3rem rgba(108,117,125,.5);
+            }
+
+        /* Responsive para tablets */
+        @media (max-width: 768px) {
+            .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+
+            .btn-primary, .btn-secondary {
+                font-size: 14px;
+                padding: 10px 14px;
+            }
+        }
+
+        /* Responsive para móviles */
+        @media (max-width: 576px) {
+            .container {
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+            }
+
+            h2 {
+                font-size: 18px;
+            }
+
+            .btn-primary, .btn-secondary {
+                font-size: 13px;
+                padding: 8px 12px;
+                width: 100%;
+                margin-bottom: 0.5rem;
+            }
+        }
+    </style>
+    <meta charset="UTF-8">
+    <title>Transformar PDF en Imágenes</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+    <div class="container py-5">
+        <h2 class="text-center mb-4">Transformar PDF en Imágenes</h2>
+        <div class="card shadow p-4">
+            <form action="{% url 'pdf_a_imagen' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="archivo" class="form-label">Selecciona un archivo PDF</label>
+                    <input type="file" name="archivo" id="archivo" accept="application/pdf" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Convertir y Descargar ZIP</button>
+                <a href="{% url 'lista_documentos' %}" class="btn btn-secondary ms-2">Volver</a>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>

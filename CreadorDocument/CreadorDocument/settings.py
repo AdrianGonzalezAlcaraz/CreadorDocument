@@ -23,12 +23,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '123d5433-eed1-4a00-9555-38a129d84b3a'
+
+#SECRET_KEY = '123d5433-eed1-4a00-9555-38a129d84b3a'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://creadordocument.onrender.com']
 
 # Application references
 # https://docs.djangoproject.com/en/2.1/ref/settings/#std:setting-INSTALLED_APPS
@@ -49,6 +50,7 @@ INSTALLED_APPS = [
 # https://docs.djangoproject.com/en/2.1/topics/http/middleware/
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -88,7 +90,7 @@ DATABASES = {
     }
 }
 '''
-DATABASES = {
+'''DATABASES = {
     'default': {
         'ENGINE': 'mssql',
         'NAME': 'gestionDocumentos',
@@ -101,7 +103,18 @@ DATABASES = {
             #'unicode_results': True,
         },
     }
-}
+}'''
+'''DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'documentos_fsmg',
+        'USER': 'documentos_fsmg_user',
+        'PASSWORD': 'Q09AxeGixUR1xMKkLR6BeWed4CrsSa14',
+        'HOST': 'dpg-d0o9cdali9vc73fqsg80-a.oregon-postgres.render.com',
+        'PORT': '5432',  # Render usa el puerto estándar
+    }
+}'''
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -149,8 +162,8 @@ AUTHENTICATION_BACKENDS = [
 GOOGLE_OAUTH2_URL = "https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=1019076673616-kcm22556hlpkkflrf9jflqq9hn77ehmv.apps.googleusercontent.com&redirect_uri=http://localhost:8000/oauth2callback/&scope=https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/gmail.send&access_type=offline"
 
 # Configuración para Google OAuth2
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '1019076673616-kcm22556hlpkkflrf9jflqq9hn77ehmv.apps.googleusercontent.com'  # Tu Client ID
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'  # Reemplázalo con tu Client Secret
+#SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '1019076673616-kcm22556hlpkkflrf9jflqq9hn77ehmv.apps.googleusercontent.com'  # Tu Client ID
+#SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'  # Reemplázalo con tu Client Secret
 
 '''SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
     'https://www.googleapis.com/auth/drive.file',  # Acceso a Google Drive
@@ -173,3 +186,21 @@ GOOGLE_OAUTH_SCOPES = [
     "https://www.googleapis.com/auth/gmail.send",
     "https://www.googleapis.com/auth/drive.file",
 ]
+
+GOOGLE_OAUTH_REDIRECT_URI = 'http://localhost:8000/accounts/google/login/callback/'
+
+SECRET_KEY = os.getenv('SECRET_KEY', 'default_key_for_local_dev')
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DB_NAME', 'documentos_fsmg'),
+        'USER': os.getenv('DB_USER', 'documentos_fsmg_user'),
+        'PASSWORD': os.getenv('DB_PASSWORD', 'default_password'),
+        'HOST': os.getenv('DB_HOST', 'localhost'),
+        'PORT': os.getenv('DB_PORT', '5432'),
+    }
+}
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')

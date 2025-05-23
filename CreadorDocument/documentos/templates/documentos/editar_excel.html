@@ -1,187 +1,5 @@
-﻿<!--<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Editar Hoja de Cálculo - {{ documento.titulo }}</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/luckysheet@latest/dist/plugins/css/plugins.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/luckysheet@latest/dist/css/luckysheet.css" />
-    <script src="https://cdn.jsdelivr.net/npm/luckysheet@latest/dist/plugins/js/plugin.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/luckysheet@latest/dist/luckysheet.umd.js"></script>
+﻿
 
-    <style>
-        html, body {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-        }
-
-        #luckysheet {
-            margin: 0;
-            padding: 0;
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            left: 0;
-            top: 0;
-        }
-
-        #guardar-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            z-index: 1000;
-            padding: 10px 20px;
-            background: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-    </style>
-</head>
-<body>
-    <button id="guardar-btn">Guardar</button>
-
-    <div id="luckysheet"></div>
-
-    <script>
-        // Cargar los datos existentes desde el servidor
-        const datosGuardados = JSON.parse('{{ contenido|escapejs }}');  // De tu vista Django
-
-        luckysheet.create({
-            container: 'luckysheet',
-            data: datosGuardados.length ? datosGuardados : [
-                {
-                    name: "Hoja1",
-                    color: "",
-                    index: 0,
-                    status: 1,
-                    order: 0,
-                    celldata: [],
-                    row: 30,
-                    column: 15
-                }
-            ],
-            lang: 'es',
-        });
-
-        document.getElementById("guardar-btn").addEventListener("click", () => {
-            const data = luckysheet.getAllSheets();
-            fetch("", {
-                method: "POST",
-                headers: {
-                    "X-CSRFToken": "{{ csrf_token }}",
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ contenido: JSON.stringify(data) })
-            })
-            .then(res => res.json())
-            .then(data => alert("Guardado exitosamente"))
-            .catch(err => alert("Error al guardar"));
-        });
-        document.getElementById("guardar-btn").addEventListener("click", () => {
-            const data = luckysheet.getAllSheets();  // Obtiene todos los datos de las hojas
-            fetch("", {  // Asegúrate de que esta URL esté correcta
-                method: "POST",
-                headers: {
-                    "X-CSRFToken": "{{ csrf_token }}",  // CSRF Token para proteger contra ataques CSRF
-                    "Content-Type": "application/json"  // Indicamos que el cuerpo de la solicitud es JSON
-                },
-                body: JSON.stringify({ contenido: JSON.stringify(data) })  // Datos de las hojas
-            })
-                .then(res => res.json())
-                .then(data => alert("Guardado exitosamente"))
-                .catch(err => alert("Error al guardar"));
-        });
-        fetch("{% url 'guardar_hoja_calculo' doc_id=documento.id %}", {  // Usa el URL correcto
-            method: "POST",
-            headers: {
-                "X-CSRFToken": "{{ csrf_token }}",
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ contenido: JSON.stringify(data) })
-        })
-            .then(res => res.json())
-            .then(data => alert("Guardado exitosamente"))
-            .catch(err => alert("Error al guardar"));
-    </script>
-</body>
-</html>-->
-<!--<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Editar {{ documento.titulo }}</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/luckysheet@2.1.13/dist/plugins/css/plugins.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/luckysheet@2.1.13/dist/css/luckysheet.css" />
-    <script src="https://cdn.jsdelivr.net/npm/luckysheet@2.1.13/dist/plugins/js/plugin.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/luckysheet@2.1.13/dist/luckysheet.umd.js"></script>
-
-    <style>
-        html, body {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-        }
-
-        #luckysheet {
-            margin: 0;
-            padding: 0;
-            position: absolute;
-            width: 100%;
-            height: 90%;
-            left: 0;
-            top: 10%;
-        }
-
-        .top-bar {
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 10%;
-            width: 100%;
-            padding: 10px;
-            background: #f2f2f2;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-    </style>
-</head>
-<body>
-    <div class="top-bar">
-        <h2>Editando: {{ documento.titulo }}.{{ documento.extension }}</h2>
-        <button id="guardar">Guardar</button>
-    </div>
-
-    <div id="luckysheet"></div>
-
-    <form method="POST" id="guardar-form">
-        {% csrf_token %}
-        <textarea name="contenido" id="contenido" hidden></textarea>
-    </form>
-
-    <script>
-        // Iniciar Luckysheet
-        luckysheet.create({
-            container: 'luckysheet',
-            lang: 'es',
-            data: {{ contenido|safe }},
-            showinfobar: false,
-            gridKey: false,
-            showtoolbar: true,
-            showformulaBar: true,
-        });
-
-        document.getElementById('guardar').addEventListener('click', function () {
-            const jsonData = JSON.stringify(luckysheet.getAllSheets());
-            document.getElementById('contenido').value = jsonData;
-            document.getElementById('guardar-form').submit();
-        });
-    </script>
-</body>
-</html>-->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -189,45 +7,185 @@
     <title>Editar Hoja de Cálculo - {{ documento.titulo }}</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/luckysheet@latest/dist/plugins/css/plugins.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/luckysheet@latest/dist/css/luckysheet.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/luckysheet@latest/dist/plugins/js/plugin.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/luckysheet@latest/dist/luckysheet.umd.js"></script>
 
     <style>
-        html, body {
+        /* Tipografía y colores base */
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            background-color: #ffffff;
+            color: #212529;
             margin: 0;
             padding: 0;
-            height: 100%;
         }
 
-        #luckysheet {
-            margin: 0;
-            padding: 0;
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            left: 0;
+        /* Barra superior (topbar) */
+        .topbar {
+            position: fixed;
             top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background-color: #202124;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 0 20px;
+            z-index: 1000;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
         }
 
+            .topbar button {
+                margin-left: 10px;
+                padding: 8px 16px;
+                font-size: 15px;
+                border: none;
+                border-radius: 5px;
+                font-weight: 500;
+                color: #ffffff;
+                transition: background-color 0.2s ease;
+            }
+
+        /* Botón Guardar */
         #guardar-btn {
+            background-color: #34A853;
+        }
+
+            #guardar-btn:hover {
+                background-color: #2c8c47;
+            }
+
+        /* Botón Cerrar */
+        #cerrar-btn {
+            background-color: #d9534f;
+        }
+
+            #cerrar-btn:hover {
+                background-color: #c9302c;
+            }
+
+        /* Área de hoja de cálculo */
+        #luckysheet {
             position: absolute;
-            top: 10px;
-            right: 10px;
-            z-index: 1000;
-            padding: 10px 20px;
-            background: #4CAF50;
-            color: white;
+            top: 60px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: calc(100% - 60px);
+        }
+
+        /* Modales */
+        .modal-content {
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+
+        .modal-title.text-success {
+            color: black;
+        }
+
+        .modal-footer .btn-primary {
+            background-color: #007bff;
             border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
+        }
+
+            .modal-footer .btn-primary:hover {
+                background-color: #0069d9;
+            }
+
+        .modal-footer .btn-secondary {
+            background-color: #6c757d;
+            border: none;
+        }
+
+            .modal-footer .btn-secondary:hover {
+                background-color: #5a6268;
+            }
+
+        /* Responsive para tablet */
+        @media (max-width: 768px) {
+            .topbar {
+                flex-direction: column;
+                height: auto;
+                padding: 10px;
+            }
+
+                .topbar button {
+                    margin: 5px 0;
+                    width: 100%;
+                }
+        }
+
+        /* Responsive para móviles */
+        @media (max-width: 576px) {
+            .topbar {
+                padding: 10px;
+                flex-direction: column;
+            }
+
+                .topbar button {
+                    font-size: 14px;
+                    width: 100%;
+                }
+        }
+
+        /* Accesibilidad: enfoque claro al navegar por teclado */
+        .topbar button:focus,
+        .modal-footer .btn:focus {
+            outline: 2px solid #007bff;
+            outline-offset: 2px;
         }
     </style>
 </head>
 <body>
-    <button id="guardar-btn">Guardar</button>
+    <div class="topbar">
+        <button id="guardar-btn">Guardar</button>
+        <button id="cerrar-btn">Cerrar</button>
+    </div>
 
     <div id="luckysheet"></div>
+
+    <!-- Modal Guardado -->
+    <div class="modal fade" id="guardadoModal" tabindex="-1" aria-labelledby="guardadoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-success" id="guardadoModalLabel">Éxito</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    Guardado exitosamente.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Guardado y Cerrado -->
+    <div class="modal fade" id="guardadoCerradoModal" tabindex="-1" aria-labelledby="guardadoCerradoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-success" id="guardadoCerradoModalLabel">Éxito</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    Guardado y cerrado correctamente.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="confirmarCerrarBtn" class="btn btn-primary">Cerrar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
         // Cargar los datos existentes desde el servidor
@@ -250,30 +208,55 @@
             lang: 'es',
         });
 
-        // Evento de guardar
-        document.getElementById("guardar-btn").addEventListener("click", () => {
-            const data = luckysheet.getAllSheets();  // Obtiene todos los datos de las hojas
+        // Función para hacer POST y guardar
+        async function guardarDatos(url, contenido) {
+            try {
+                const res = await fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "X-CSRFToken": "{{ csrf_token }}",
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ contenido: JSON.stringify(contenido) })
+                });
+                return await res.json();
+            } catch {
+                return { status: "error" };
+            }
+        }
 
-            // Asegúrate de que la URL sea correcta y que se pase el ID del documento
-            fetch("{% url 'guardar_hoja_calculo' doc_id=documento.id %}", {
-                method: "POST",
-                headers: {
-                    "X-CSRFToken": "{{ csrf_token }}",  // CSRF Token para proteger contra ataques CSRF
-                    "Content-Type": "application/json"  // Indicamos que el cuerpo de la solicitud es JSON
-                },
-                body: JSON.stringify({ contenido: JSON.stringify(data) })  // Datos de las hojas
-            })
-            .then(res => res.json())
-            .then(data => {
-                alert("Guardado exitosamente");
-                // Redirigir a la página inicial después de guardar
-                window.location.href = "{% url 'lista_documentos' %}";  // Cambia 'lista_documentos' por la URL correcta
-            })
-            .catch(err => alert("Error al guardar"));
+        // Botón Guardar (solo guardar)
+        document.getElementById("guardar-btn").addEventListener("click", async () => {
+            const data = luckysheet.getAllSheets();
+
+            const respuesta = await guardarDatos("{% url 'guardar_contenido_documento' doc_id=documento.id %}", data);
+
+            if(respuesta.status === "success") {
+                const modal = new bootstrap.Modal(document.getElementById('guardadoModal'));
+                modal.show();
+            } else {
+                alert("Error al guardar");
+            }
+        });
+
+        // Botón Cerrar (guardar y luego preguntar para cerrar)
+        document.getElementById("cerrar-btn").addEventListener("click", async () => {
+            const data = luckysheet.getAllSheets();
+
+            const respuesta = await guardarDatos("{% url 'guardar_hoja_calculo' doc_id=documento.id %}", data);
+
+            if(respuesta.status === "success") {
+                const modal = new bootstrap.Modal(document.getElementById('guardadoCerradoModal'));
+                modal.show();
+            } else {
+                alert("Error al guardar y cerrar");
+            }
+        });
+
+        // Confirmar cierre y redirigir
+        document.getElementById("confirmarCerrarBtn").addEventListener("click", () => {
+            window.location.href = "{% url 'lista_documentos' %}";
         });
     </script>
 </body>
 </html>
-
-</html>
-

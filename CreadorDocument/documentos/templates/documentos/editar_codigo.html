@@ -1,119 +1,165 @@
-﻿<!--<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <title>Editar {{ documento.titulo }}</title>
-    <style>
-        #editor {
-            height: 500px;
-            width: 100%;
-        }
-
-        #preview {
-            height: 500px;
-            width: 100%;
-            border: 1px solid #ccc;
-            margin-top: 10px;
-        }
-
-        body {
-            font-family: Arial;
-            margin: 20px;
-        }
-    </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js"></script>
-</head>
-<body>
-    <h2>Editando: {{ documento.titulo }}.{{ documento.extension }}</h2>
-    <form method="POST">
-        {% csrf_token %}
-        <div id="editor">{{ contenido }}</div>
-        <textarea name="contenido" id="contenido" hidden></textarea>
-        <button type="submit">Guardar</button>
-    </form>
-
-    {% if documento.extension == "html" %}
-    <h3>Previsualización</h3>
-    <iframe id="preview"></iframe>
-    {% endif %}
-
-    <script>
-        const editor = ace.edit("editor");
-        editor.setTheme("ace/theme/monokai");
-        editor.session.setMode("ace/mode/{{ documento.extension }}");
-
-        const textarea = document.getElementById("contenido");
-        document.querySelector("form").addEventListener("submit", () => {
-            textarea.value = editor.getValue();
-        });
-
-        {% if documento.extension == "html" %}
-        // Previsualización en vivo
-        const preview = document.getElementById("preview");
-        editor.session.on('change', () => {
-            preview.srcdoc = editor.getValue();
-        });
-        preview.srcdoc = editor.getValue();
-        {% endif %}
-    </script>
-</body>
-</html>-->
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Editar {{ documento.titulo }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: Arial;
+            font-family: 'Roboto', Arial, sans-serif;
             margin: 20px;
+            background-color: #ffffff;
+            color: #212529;
+        }
+
+        h2 {
+            font-size: 24px;
+            font-weight: bold;
         }
 
         .editor-container {
             display: flex;
             gap: 20px;
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 8px;
         }
 
-        #editor, #preview {
+        #editor {
             height: 500px;
-            width: 100%;
             flex: 1;
+            background-color: #000;
+            color: #fff;
+            border-radius: 8px;
         }
 
         #preview {
+            height: 500px;
+            flex: 1;
             border: 1px solid #ccc;
+            background-color: #fff;
+            border-radius: 8px;
+        }
+
+        .actions {
+            margin-top: 15px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
         }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js"></script>
 </head>
 <body>
-    <h2>Editando: {{ documento.titulo }}.{{ documento.extension }}</h2>
+    <div class="container">
+        <h2>Editando: {{ documento.titulo }}.{{ documento.extension }}</h2>
 
-    <form method="POST">
-        {% csrf_token %}
-        <div class="editor-container">
-            <div id="editor">{{ contenido }}</div>
+        <form method="POST" id="editorForm">
+            {% csrf_token %}
+            <div class="editor-container">
+                <div id="editor" aria-label="Editor de código fuente">{{ contenido }}</div>
 
-            {% if documento.extension == "html" %}
-            <iframe id="preview"></iframe>
-            {% endif %}
+                {% if documento.extension == "html" %}
+                <iframe id="preview" title="Vista previa HTML"></iframe>
+                {% endif %}
+            </div>
+
+            <textarea name="contenido" id="contenido" hidden></textarea>
+
+            <div class="actions mt-3">
+                <button type="submit" name="accion" value="guardar" class="btn btn-primary" id="guardarBtn">Guardar</button>
+                <button type="button" class="btn btn-secondary" id="cerrarBtn">Cerrar documento</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Modal de guardado -->
+    <div class="modal fade" id="guardadoModal" tabindex="-1" aria-labelledby="guardadoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="guardadoModalLabel">Documento guardado</h5>
+                </div>
+                <div class="modal-body">
+                    El documento ha sido guardado correctamente.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
+                </div>
+            </div>
         </div>
+    </div>
 
-        <textarea name="contenido" id="contenido" hidden></textarea>
-        <br>
-        <button type="submit">Guardar</button>
-    </form>
+    <!-- Modal de confirmación de cierre -->
+    <div class="modal fade" id="cerrarModal" tabindex="-1" aria-labelledby="cerrarModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cerrarModalLabel">¿Cerrar documento?</h5>
+                </div>
+                <div class="modal-body">
+                    ¿Está seguro de que desea cerrar el documento sin guardar más cambios?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="confirmarCerrarBtn">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         const editor = ace.edit("editor");
         editor.setTheme("ace/theme/monokai");
         editor.session.setMode("ace/mode/{{ documento.extension }}");
 
         const textarea = document.getElementById("contenido");
-        document.querySelector("form").addEventListener("submit", () => {
+        const form = document.getElementById("editorForm");
+
+        // Guardar
+        document.getElementById("guardarBtn").addEventListener("click", function(event) {
             textarea.value = editor.getValue();
+            event.preventDefault();
+
+            const modal = new bootstrap.Modal(document.getElementById('guardadoModal'));
+            modal.show();
+
+            modal._element.addEventListener('hidden.bs.modal', function () {
+                const hiddenInput = document.createElement("input");
+                hiddenInput.type = "hidden";
+                hiddenInput.name = "accion";
+                hiddenInput.value = "guardar";
+                form.appendChild(hiddenInput);
+                form.submit();
+            }, { once: true });
         });
 
+        // Cerrar
+        document.getElementById("cerrarBtn").addEventListener("click", function() {
+            const cerrarModal = new bootstrap.Modal(document.getElementById('cerrarModal'));
+            cerrarModal.show();
+        });
+
+        document.getElementById("confirmarCerrarBtn").addEventListener("click", function () {
+            textarea.value = editor.getValue();
+            const hiddenInput = document.createElement("input");
+            hiddenInput.type = "hidden";
+            hiddenInput.name = "accion";
+            hiddenInput.value = "cerrar";
+            form.appendChild(hiddenInput);
+            form.submit();
+        });
+
+        // Vista previa HTML
         {% if documento.extension == "html" %}
         const preview = document.getElementById("preview");
         editor.session.on('change', () => {
@@ -124,4 +170,3 @@
     </script>
 </body>
 </html>
-

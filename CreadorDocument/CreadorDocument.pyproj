@@ -78,11 +78,13 @@
     <Folder Include="static\" />
     <Folder Include="static\CreadorDocument\" />
     <Folder Include="static\CreadorDocument\css\" />
+    <Folder Include="static\CreadorDocument\css\css\" />
     <Folder Include="static\CreadorDocument\js\" />
     <Folder Include="static\CreadorDocument\media\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\templates\app\crear_usuario.html" />
+    <Content Include="app\templates\app\configurar_sesion.html" />
     <Content Include="documentos\templates\documentos\crear.html" />
     <Content Include="documentos\templates\documentos\editar_codigo.html" />
     <Content Include="documentos\templates\documentos\editar_documento.html" />
@@ -92,6 +94,8 @@
     <Content Include="documentos\templates\documentos\editor.html" />
     <Content Include="documentos\templates\documentos\index.html" />
     <Content Include="documentos\templates\documentos\lista.html" />
+    <Content Include="documentos\templates\documentos\pdf_a_imagen.html" />
+    <Content Include="Procfile" />
     <Content Include="requirements.txt" />
     <Content Include="db.sqlite3" />
     <Content Include="app\static\app\content\bootstrap.css" />
@@ -122,6 +126,7 @@
     <Content Include="app\templates\app\layout.html" />
     <Content Include="app\templates\app\login.html" />
     <Content Include="app\templates\app\loginpartial.html" />
+    <Content Include="static\CreadorDocument\css\css\editor_codigo.css" />
     <Content Include="static\CreadorDocument\media\ejemplo.word" />
   </ItemGroup>
   <ItemGroup>

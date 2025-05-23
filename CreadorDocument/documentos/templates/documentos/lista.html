@@ -1,23 +1,58 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <title>Mis Documentos</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', Arial, sans-serif;
             margin: 0;
-            background: #f5f5f5;
+            background: #ffffff; /* Fondo general blanco */
+            color: #212529; /* Texto principal negro */
+            font-size: 16px;
         }
 
         header {
-            background: #444;
+            background-color: #007bff; /* Primario azul */
             color: white;
-            padding: 15px;
+            padding: 15px 20px;
             text-align: center;
+            position: relative;
+            font-weight: 700;
+            font-size: 22px;
         }
 
+        .header-actions {
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            display: flex;
+            gap: 12px;
+        }
+
+            .header-actions form button {
+                background-color: #6c757d; /* Secundario gris oscuro */
+                color: white;
+                padding: 8px 14px;
+                border-radius: 6px;
+                border: none;
+                font-weight: 700;
+                cursor: pointer;
+                font-size: 14px;
+                transition: background-color 0.3s ease;
+            }
+
+                .header-actions form button:hover,
+                .header-actions form button:focus {
+                    background-color: #5a6268;
+                    outline: none;
+                }
+
         .filtros {
+            background: #f8f9fa; /* fondo secciones gris claro */
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
@@ -25,106 +60,418 @@
             gap: 10px;
         }
 
-            .filtros a {
-                text-decoration: none;
+            .filtros form button {
                 color: white;
-                font-weight: bold;
-                padding: 15px 20px;
+                font-weight: 700;
+                padding: 14px 22px;
                 border-radius: 8px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
+                border: none;
+                cursor: pointer;
+                font-size: 15px;
+                transition: filter 0.2s ease;
             }
 
-                .filtros a.word {
-                    background: #3b82f6;
+                .filtros form button:hover,
+                .filtros form button:focus {
+                    filter: brightness(0.9);
+                    outline: none;
                 }
-                /* Azul */
-                .filtros a.excel {
-                    background: #22c55e;
+
+        /* Botones filtro colores personalizados */
+
+        .word {
+            background-color: #1e40af; /* azul oscuro */
+        }
+
+        .excel {
+            background-color: #166534; /* verde oscuro */
+        }
+
+        .html {
+            background-color: #92400e; /* naranja oscuro */
+        }
+
+        .css {
+            background-color: #0ea5e9; /* azul claro */
+        }
+
+        .presentacion {
+            background-color: #5b21b6; /* morado oscuro */
+        }
+
+        .javascript {
+            background-color: #ea580c; /* naranja claro */
+        }
+
+        .php {
+            background-color: #a78bfa; /* morado claro */
+        }
+
+        .crear {
+            background-color: #6c757d; /* secundario gris oscuro */
+        }
+
+        .acciones-superiores {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 15px 20px;
+            gap: 15px;
+            background: #f8f9fa;
+        }
+
+            .acciones-superiores form {
+                display: inline-block;
+            }
+
+            .acciones-superiores button {
+                background-color: #6c757d;
+                color: white;
+                border: none;
+                padding: 10px 16px;
+                border-radius: 8px;
+                font-weight: 700;
+                cursor: pointer;
+                font-size: 14px;
+                transition: background-color 0.3s ease;
+            }
+
+                .acciones-superiores button:hover,
+                .acciones-superiores button:focus {
+                    background-color: #5a6268;
+                    outline: none;
                 }
-                /* Verde */
-                .filtros a.html {
-                    background: #b45309;
-                }
-                /* Marrón */
-                .filtros a.css {
-                    background: #06b6d4;
-                }
-                /* Celeste */
-                .filtros a.presentacion {
-                    background: #a855f7;
-                }
-                /* Morado */
-                .filtros a.javascript {
-                    background: #f59e0b;
-                }
-                /* Amarillo */
-                .filtros a.php {
-                    background: #8b5cf6;
-                }
-                /* Lila */
-                .filtros a.crear {
-                    background: #000000;
-                }
-        /* Negro */
 
         .documentos {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             padding: 20px;
+            gap: 15px;
+            background: #ffffff;
         }
 
         .documento {
-            background: white;
+            background: #f8f9fa;
             width: 180px;
-            margin: 10px;
+            margin: 0;
             padding: 15px;
             border-radius: 10px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
             text-align: center;
-            transition: transform 0.2s ease-in-out;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
-            .documento:hover {
+            .documento:hover,
+            .documento:focus-within {
                 transform: scale(1.05);
+                box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+                outline: none;
             }
 
             .documento a {
                 text-decoration: none;
-                color: #333;
-                font-weight: bold;
+                color: #212529;
+                font-weight: 700;
+                font-size: 16px;
+                margin-bottom: 12px;
+                display: block;
+            }
+
+                .documento form button,
+                .documento a[download] {
+                    display: block;
+                    margin: 6px auto;
+                    width: 100%;
+                    font-weight: 700;
+                    padding: 8px 12px;
+                    border-radius: 6px;
+                    border: none;
+                    cursor: pointer;
+                    font-size: 14px;
+                    transition: background-color 0.3s ease;
+                }
+
+            .documento form button {
+                color: white;
+            }
+
+                .documento form button[type="submit"] {
+                    background-color: #2563eb; /* azul exportar */
+                }
+
+                    .documento form button[type="submit"]:hover,
+                    .documento form button[type="submit"]:focus {
+                        background-color: #1d4ed8;
+                        outline: none;
+                    }
+
+            .documento a[download] {
+                background-color: #10b981; /* verde descargar */
+                color: white;
+                text-align: center;
+                text-decoration: none;
+            }
+
+                .documento a[download]:hover,
+                .documento a[download]:focus {
+                    background-color: #059669;
+                    outline: none;
+                }
+
+        .btn-borrar-documento {
+            background-color: #ef4444; /* rojo borrar */
+            color: white;
+            width: 100%;
+            font-weight: 700;
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+            .btn-borrar-documento:hover,
+            .btn-borrar-documento:focus {
+                background-color: #dc2626;
+                outline: none;
             }
 
         .no-docs {
             text-align: center;
             padding: 30px;
-            color: #777;
+            color: #6c757d;
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        /* Responsividad */
+
+        /* Tablet */
+        @media (max-width: 768px) {
+            header {
+                font-size: 20px;
+                padding: 15px 10px;
+            }
+
+            .header-actions {
+                position: static;
+                justify-content: center;
+                margin-top: 10px;
+                gap: 8px;
+            }
+
+            .filtros {
+                flex-direction: column;
+                align-items: center;
+                padding: 15px 10px;
+            }
+
+                .filtros form button {
+                    width: 100%;
+                    max-width: 300px;
+                    font-size: 16px;
+                    padding: 12px 0;
+                }
+
+            .acciones-superiores {
+                flex-direction: column;
+                align-items: center;
+                gap: 12px;
+                padding: 10px;
+            }
+
+                .acciones-superiores button,
+                .acciones-superiores form button {
+                    width: 100%;
+                    max-width: 300px;
+                    font-size: 16px;
+                }
+
+            .documentos {
+                padding: 15px 10px;
+                gap: 12px;
+                justify-content: center;
+            }
+
+            .documento {
+                width: 140px;
+                padding: 12px;
+            }
+
+                .documento a {
+                    font-size: 14px;
+                }
+        }
+
+        /* Móvil */
+        @media (max-width: 576px) {
+            header {
+                font-size: 18px;
+                padding: 12px 8px;
+            }
+
+            .header-actions {
+                flex-direction: column;
+                position: static;
+                margin-top: 10px;
+                gap: 8px;
+            }
+
+            .filtros {
+                flex-direction: column;
+                padding: 10px 8px;
+            }
+
+                .filtros form button {
+                    width: 100%;
+                    max-width: 100%;
+                    font-size: 15px;
+                    padding: 10px 0;
+                }
+
+            .acciones-superiores {
+                flex-direction: column;
+                padding: 8px;
+                gap: 10px;
+            }
+
+                .acciones-superiores button,
+                .acciones-superiores form button {
+                    width: 100%;
+                    font-size: 15px;
+                }
+
+            .documentos {
+                padding: 10px 8px;
+                gap: 10px;
+                justify-content: center;
+            }
+
+            .documento {
+                width: 100%;
+                max-width: 300px;
+                padding: 10px;
+            }
+
+                .documento a {
+                    font-size: 14px;
+                }
+        }
+
+        /* Accesibilidad: foco visible y aria-labels deben ir en HTML */
+
+        /* Mejorar contraste para placeholders o textos auxiliares si hubiera */
+        /* Si usas placeholders, aplicar color secundario #6c757d */
+
+        /* Fin CSS */
+        .documento.word {
+            background: #dbeafe; /* azul claro */
+            color: #1e40af; /* azul oscuro */
+        }
+
+        .documento.excel {
+            background: #dcfce7; /* verde claro */
+            color: #166534; /* verde oscuro */
+        }
+
+        .documento.html {
+            background: #fef3c7; /* amarillo claro */
+            color: #78350f; /* marrón oscuro */
+        }
+
+        .documento.css {
+            background: #cffafe; /* cian claro */
+            color: #0e7490; /* cian oscuro */
+        }
+
+        .documento.ppt {
+            background: #ede9fe; /* morado claro */
+            color: #6b21a8; /* morado oscuro */
+        }
+
+        .documento.javascript {
+            background: #fef9c3; /* amarillo pastel */
+            color: #78350f; /* marrón oscuro */
+        }
+
+        .documento.php {
+            background: #ede9fe; /* lila claro */
+            color: #7c3aed; /* lila oscuro */
+        }
+
+        .documento.crear {
+            background: #d1d5db; /* gris claro */
+            color: #111827; /* gris oscuro */
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-
     <header>
         <h2>Mis Documentos</h2>
+        <div class="header-actions">
+            <form method="get" action="{% url 'configurar_sesion' %}">
+                <button>⚙ Configurar sesión</button>
+            </form>
+            <form method="get" action="{% url 'cerrar_sesion' %}">
+                <button type="button" class="btn btn-danger" id="cerrarBtn">Cerrar sesión</button>
+            </form>
+        </div>
     </header>
 
     <div class="filtros">
-        <a href="{% url 'lista_documentos' %}" class="crear" style="background: #6b7280;">Ver Todos</a>
-        <a href="?tipo=word" class="word">Filtrar Word</a>
-        <a href="?tipo=excel" class="excel">Filtrar Excel</a>
-        <a href="?tipo=html" class="html">Filtrar HTML</a>
-        <a href="?tipo=css" class="css">Filtrar CSS</a>
-        <a href="?tipo=ppt" class="presentacion">Filtrar Presentación</a>
-        <a href="?tipo=JavaScript" class="javascript">Filtrar JavaScript</a>
-        <a href="?tipo=php" class="php">Filtrar PHP</a>
-        <a href="{% url 'crear_documento' %}" class="crear">+ Crear Documento</a>
+        <form method="get" action="{% url 'lista_documentos' %}">
+            <button class="crear" style="background: #6b7280;">Ver Todos</button>
+        </form>
+        <form method="get">
+            <button class="word" name="tipo" value="word">Filtrar Word</button>
+        </form>
+        <form method="get">
+            <button class="excel" name="tipo" value="excel">Filtrar Excel</button>
+        </form>
+        <form method="get">
+            <button class="html" name="tipo" value="html">Filtrar HTML</button>
+        </form>
+        <form method="get">
+            <button class="css" name="tipo" value="css">Filtrar CSS</button>
+        </form>
+        <form method="get">
+            <button class="presentacion" name="tipo" value="ppt">Filtrar Presentación</button>
+        </form>
+        <form method="get">
+            <button class="javascript" name="tipo" value="JavaScript">Filtrar JavaScript</button>
+        </form>
+        <form method="get">
+            <button class="php" name="tipo" value="php">Filtrar PHP</button>
+        </form>
+        <form method="get" action="{% url 'crear_documento' %}">
+            <button class="crear">+ Crear Documento</button>
+        </form>
+    </div>
+
+    <div class="acciones-superiores">
+        <form action="{% url 'importar_documento' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" name="archivo" required>
+            <button type="submit">Importar Documento</button>
+        </form>
+        <form method="get" action="{% url 'ordenar_documentos' %}?metodo=nombre">
+            <button>Ordenar por nombre</button>
+        </form>
+        <form method="get" action="{% url 'pdf_a_imagen' %}">
+            <button>Transformar PDF en Imágenes</button>
+        </form>
     </div>
 
     <div class="documentos">
         {% for documento in documentos %}
-        <div class="documento">
+        <div class="documento {{ documento.extension|lower }}">
             <a href="{% url 'editar_documento' doc_id=documento.id %}">
                 <p>{{ documento.titulo }}.{{ documento.extension }}</p>
             </a>
@@ -134,19 +481,78 @@
                     Exportar a Drive
                 </button>
             </form>
-            <!-- Botón o enlace para descargar -->
             <a href="{{ documento.archivo_path.url }}" download style="display:inline-block; background:#10b981; color:white; padding:8px 12px; border-radius:6px; text-decoration:none; font-weight:bold; cursor:pointer;">
                 Descargar
             </a>
-            <form action="{% url 'borrar_documento' documento.id %}" method="post" style="display:inline;">
+            <form action="{% url 'borrar_documento' documento.id %}" method="post" class="form-borrar-documento" style="display:inline;">
                 {% csrf_token %}
-                <button type="submit" style="background:#ef4444; color:white; border:none; padding:8px 12px; border-radius:6px; cursor:pointer;">
+                <button type="submit" class="btn-borrar-documento" style="background:#ef4444; color:white; border:none; padding:8px 12px; border-radius:6px; cursor:pointer;">
                     Borrar
                 </button>
             </form>
         </div>
         {% endfor %}
     </div>
+
+
+    <!-- Modal de confirmación para cerrar sesión -->
+    <div class="modal fade" id="cerrarModal" tabindex="-1" aria-labelledby="cerrarModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cerrarModalLabel">¿Cerrar sesión?</h5>
+                </div>
+                <div class="modal-body">
+                    ¿Está seguro de que desea cerrar sesión?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <a href="{% url 'cerrar_sesion' %}" class="btn btn-primary" id="confirmarCerrarBtn">Aceptar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="borrarModal" tabindex="-1" aria-labelledby="borrarModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="borrarModalLabel">¿Borrar documento?</h5>
+                </div>
+                <div class="modal-body">
+                    ¿Estás seguro de que deseas borrar este documento? Esta acción no se puede deshacer.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="confirmarBorrarBtn">Borrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("cerrarBtn").addEventListener("click", function () {
+            const cerrarModal = new bootstrap.Modal(document.getElementById('cerrarModal'));
+            cerrarModal.show();
+        });
+        let formAEliminar = null;
+
+        document.querySelectorAll('.form-borrar-documento').forEach(form => {
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();  // Previene el envío automático
+                formAEliminar = form;  // Guarda referencia al form actual
+                const modal = new bootstrap.Modal(document.getElementById('borrarModal'));
+                modal.show();
+            });
+        });
+
+        document.getElementById('confirmarBorrarBtn').addEventListener('click', function () {
+            if (formAEliminar) {
+                formAEliminar.submit();  // Envía el form cuando se confirma
+            }
+        });
+    </script>
 </body>
 </html>
 

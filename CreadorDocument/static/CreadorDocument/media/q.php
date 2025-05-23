@@ -1,9 +1,0 @@
-<?php
-
-
-
-// Código PHP aquí
-
-
-
-?>

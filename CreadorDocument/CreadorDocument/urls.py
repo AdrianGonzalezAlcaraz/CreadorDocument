@@ -48,7 +48,7 @@ urlpatterns = [
          ),
          name='login'),
     
-    path('logout/', LogoutView.as_view(next_page='/'), name='logout'),
+    path('logout/', LogoutView.as_view(next_page='inicio'), name='logout'),
 
     # Páginas estáticas
     path('contact/', views.contact, name='contact'),
