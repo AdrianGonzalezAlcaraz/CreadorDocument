@@ -159,7 +159,7 @@ AUTHENTICATION_BACKENDS = [
     'app.backends.EmailOrUsernameModelBackend',  # usa tu app real aquí
     'django.contrib.auth.backends.ModelBackend',
 ]
-GOOGLE_OAUTH2_URL = "https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=1019076673616-kcm22556hlpkkflrf9jflqq9hn77ehmv.apps.googleusercontent.com&redirect_uri=http://localhost:8000/oauth2callback/&scope=https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/gmail.send&access_type=offline"
+GOOGLE_OAUTH2_URL = "https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=1019076673616-kcm22556hlpkkflrf9jflqq9hn77ehmv.apps.googleusercontent.com&redirect_uri=https://creadordocument.onrender.com/oauth2callback/&scope=https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/gmail.send&access_type=offline"
 
 # Configuración para Google OAuth2
 #SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '1019076673616-kcm22556hlpkkflrf9jflqq9hn77ehmv.apps.googleusercontent.com'  # Tu Client ID

@@ -76,7 +76,7 @@ def login_view(request):
         urlencode({
             "response_type": "code",
             "client_id": settings.CLIENT_ID,
-            "redirect_uri": "http://localhost:8000/oauth2callback/",
+            "redirect_uri": "https://creadordocument.onrender.com/oauth2callback/",
             "scope": " ".join(settings.GOOGLE_OAUTH_SCOPES),
             "access_type": "offline",
             "prompt": "select_account",
