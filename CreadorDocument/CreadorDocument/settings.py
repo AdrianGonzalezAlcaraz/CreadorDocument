@@ -187,7 +187,7 @@ GOOGLE_OAUTH_SCOPES = [
     "https://www.googleapis.com/auth/drive.file",
 ]
 
-GOOGLE_OAUTH_REDIRECT_URI = 'http://localhost:8000/accounts/google/login/callback/'
+GOOGLE_OAUTH_REDIRECT_URI = 'https://creadordocument.onrender.com/accounts/google/login/callback/'
 
 SECRET_KEY = os.getenv('SECRET_KEY', 'default_key_for_local_dev')
 
