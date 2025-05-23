@@ -264,7 +264,7 @@ def oauth2callback(request):
                 )
             UserSocialAuth.objects.create(user=user, provider='google', uid=google_id)
 
-        user.backend = 'social_core.backends.google.GoogleOAuth2'
+        user.backend = 'django.contrib.auth.backends.ModelBackend'
 
         if hasattr(user, 'google_credentials'):
             user.google_credentials = json.dumps({
