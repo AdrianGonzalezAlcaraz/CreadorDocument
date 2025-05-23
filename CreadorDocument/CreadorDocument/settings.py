@@ -171,7 +171,7 @@ GOOGLE_OAUTH2_URL = "https://accounts.google.com/o/oauth2/v2/auth?response_type=
 ]'''
 
 # URL de redirección (callback) después de la autenticación
-SOCIAL_AUTH_GOOGLE_OAUTH2_REDIRECT_URI = 'http://localhost:8000/oauth2callback/'
+SOCIAL_AUTH_GOOGLE_OAUTH2_REDIRECT_URI = 'https://creadordocument.onrender.com/oauth2callback/'
 
 # Configuración de autenticación backend (opcional si ya tienes configurado un modelo personalizado)
 AUTHENTICATION_BACKENDS = (
