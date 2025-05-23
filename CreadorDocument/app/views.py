@@ -279,11 +279,11 @@ def oauth2callback(request):
             user.save()
 
         login(request, user)
-        return redirect('lista_documentos')'''
+        return redirect('lista_documentos')
     except Exception as e:
         import traceback
         tb = traceback.format_exc()
-        return HttpResponse(f"Error en oauth2callback: {e}<br><pre>{tb}</pre>")
+        return HttpResponse(f"Error en oauth2callback: {e}<br><pre>{tb}</pre>")'''
 def inicio(request):
     return render(request, 'app/login.html')
 
