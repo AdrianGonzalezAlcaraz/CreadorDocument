@@ -132,7 +132,7 @@ def crear_usuario(request):
     #return render(request, 'app/login.html')
 
 
-'''def oauth2callback(request):
+def oauth2callback(request):
     code = request.GET.get('code')
     if not code:
         return HttpResponse("Código de autorización faltante.")
@@ -209,8 +209,8 @@ def crear_usuario(request):
     })
     user.save()
     login(request, user)
-    return redirect('lista_documentos')  # o la URL de tu elección'''
-def oauth2callback(request):
+    return redirect('lista_documentos')  # o la URL de tu elección
+'''def oauth2callback(request):
     try:
         code = request.GET.get('code')
         if not code:
@@ -283,7 +283,7 @@ def oauth2callback(request):
     except Exception as e:
         import traceback
         tb = traceback.format_exc()
-        return HttpResponse(f"Error en oauth2callback: {e}<br><pre>{tb}</pre>")
+        return HttpResponse(f"Error en oauth2callback: {e}<br><pre>{tb}</pre>")'''
 def inicio(request):
     return render(request, 'app/login.html')
 
