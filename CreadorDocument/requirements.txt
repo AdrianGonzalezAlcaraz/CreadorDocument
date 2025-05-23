@@ -1,4 +1,4 @@
-asgiref==3.8.1
+﻿asgiref==3.8.1
 cachetools==5.5.2
 certifi==2025.4.26
 cffi==1.17.1
@@ -6,7 +6,7 @@ charset-normalizer==3.4.2
 colorama==0.4.6
 cryptography==44.0.3
 defusedxml==0.7.1
-Django==5.2.1
+Django==4.2.11
 dj-database-url==2.3.0
 google-api-core==2.24.2
 google-api-python-client==2.169.0
