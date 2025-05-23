@@ -132,7 +132,7 @@ def crear_usuario(request):
     #return render(request, 'app/login.html')
 
 
-def oauth2callback(request):
+'''def oauth2callback(request):
     code = request.GET.get('code')
     if not code:
         return HttpResponse("Código de autorización faltante.")
@@ -209,7 +209,81 @@ def oauth2callback(request):
     })
     user.save()
     login(request, user)
-    return redirect('lista_documentos')  # o la URL de tu elección
+    return redirect('lista_documentos')  # o la URL de tu elección'''
+def oauth2callback(request):
+    try:
+        code = request.GET.get('code')
+        if not code:
+            return HttpResponse("Código de autorización faltante.")
+
+        flow = Flow.from_client_secrets_file(
+            settings.CLIENT_SECRET_FILE,
+            scopes=settings.GOOGLE_OAUTH_SCOPES,
+            redirect_uri="https://creadordocument.onrender.com/oauth2callback/"
+        )
+
+        with warnings.catch_warnings():
+            warnings.filterwarnings(
+                "ignore",
+                message=r"Scope has changed.*",
+                category=Warning,
+                module="oauthlib.oauth2.rfc6749.parameters"
+            )
+            flow.fetch_token(code=code)
+
+        credentials = flow.credentials
+        request.session['google_credentials'] = credentials.to_json()
+        if not credentials or not credentials.id_token:
+            return HttpResponse("No se pudo obtener el id_token.")
+
+        id_info = id_token.verify_oauth2_token(
+            credentials.id_token,
+            google_requests.Request(),
+            credentials.client_id
+        )
+
+        google_id = id_info.get('sub')
+        google_email = id_info.get('email')
+
+        if not google_id or not google_email:
+            return HttpResponse("Faltan datos del token de Google.")
+
+        Usuario = get_user_model()
+
+        try:
+            user_social = UserSocialAuth.objects.get(provider='google', uid=google_id)
+            user = user_social.user
+        except UserSocialAuth.DoesNotExist:
+            try:
+                user = Usuario.objects.get(email=google_email)
+            except Usuario.DoesNotExist:
+                user = Usuario.objects.create_user(
+                    username=google_email.split('@')[0],
+                    email=google_email,
+                    password=None
+                )
+            UserSocialAuth.objects.create(user=user, provider='google', uid=google_id)
+
+        user.backend = 'social_core.backends.google.GoogleOAuth2'
+
+        # Verifica que el modelo Usuario tenga este campo:
+        if hasattr(user, 'google_credentials'):
+            user.google_credentials = json.dumps({
+                'token': credentials.token,
+                'refresh_token': credentials.refresh_token,
+                'token_uri': credentials.token_uri,
+                'client_id': credentials.client_id,
+                'client_secret': credentials.client_secret,
+                'scopes': credentials.scopes
+            })
+            user.save()
+
+        login(request, user)
+        return redirect('lista_documentos')
+    except Exception as e:
+        import traceback
+        tb = traceback.format_exc()
+        return HttpResponse(f"Error en oauth2callback: {e}<br><pre>{tb}</pre>")
 def inicio(request):
     return render(request, 'app/login.html')
 
