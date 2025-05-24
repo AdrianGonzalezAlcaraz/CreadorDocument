@@ -198,7 +198,10 @@ DATABASES = {
         'USER': os.getenv('DB_USER', 'documentos_fsmg_user'),
         'PASSWORD': os.getenv('DB_PASSWORD', 'default_password'),
         'HOST': os.getenv('DB_HOST', 'localhost'),
-        'PORT': os.getenv('DB_PORT', '5432'),
+        'PORT': os.getenv('DB_PORT', 5432),
+        'OPTIONS': {
+            'sslmode': 'require'  # ✅ SSL obligatorio para Render
+        }
     }
 }
 
