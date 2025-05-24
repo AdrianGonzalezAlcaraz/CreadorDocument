@@ -196,7 +196,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.getenv('DB_NAME', 'documentos_fsmg'),
         'USER': os.getenv('DB_USER', 'documentos_fsmg_user'),
-        'PASSWORD': os.getenv('DB_PASSWORD', 'Q09AxeGixUR1xMKkLR6BeWed4CrsSa14'),
+        'PASSWORD': os.getenv('DB_PASSWORD', ' 4'),
         'HOST': os.getenv('DB_HOST', 'dpg-d0o9cdali9vc73fqsg80-a.oregon-postgres.render.com'),
         'PORT': os.getenv('DB_PORT', 5432),
         'OPTIONS': {

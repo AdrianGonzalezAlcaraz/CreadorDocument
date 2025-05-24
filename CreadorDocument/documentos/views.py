@@ -176,32 +176,56 @@ def editar_documento(request, doc_id):
         return render(request, 'documentos/editar_codigo.html', {'documento': documento, 'contenido': contenido})
     
     elif documento.extension in ['xlsx', 'excel', 'spreadsheet']:
-        with open(documento.archivo_path.path, 'r', encoding='utf-8') as f:
-            contenido = f.read().strip()
+        try:
+            with open(documento.archivo_path.path, 'r', encoding='utf-8') as f:
+                contenido = f.read().strip()
 
-        if contenido:
-            try:
-                json.loads(contenido)
-            except json.JSONDecodeError:
+            if contenido:
                 try:
-                    contenido_json = csv_to_json(contenido)
-                    contenido = json.dumps([{
+                    contenido_json = json.loads(contenido)
+                    # Validar estructura mínima para evitar errores en LuckySheet
+                    if not isinstance(contenido_json, list) or not all('celldata' in hoja for hoja in contenido_json):
+                        raise ValueError("Estructura no válida")
+                except Exception:
+                    # Si falla, forzar una estructura básica por defecto
+                    contenido_json = [{
                         "name": "Hoja1",
                         "color": "",
                         "index": 0,
                         "status": 1,
                         "order": 0,
-                        "celldata": contenido_json,
+                        "celldata": [],
                         "row": 30,
                         "column": 15
-                    }])
-                except Exception as e:
-                    print("Error al convertir CSV a JSON:", e)
-                    contenido = '[{ "name": "Hoja1", "celldata": [] }]'
-        else:
-            contenido = '[{ "name": "Hoja1", "celldata": [] }]'
+                    }]
+            else:
+                contenido_json = [{
+                    "name": "Hoja1",
+                    "color": "",
+                    "index": 0,
+                    "status": 1,
+                    "order": 0,
+                    "celldata": [],
+                    "row": 30,
+                    "column": 15
+                }]
+        except Exception as e:
+            print(f"Error al leer el archivo: {e}")
+            contenido_json = [{
+                "name": "Hoja1",
+                "color": "",
+                "index": 0,
+                "status": 1,
+                "order": 0,
+                "celldata": [],
+                "row": 30,
+                "column": 15
+            }]
 
-        return render(request, 'documentos/editar_excel.html', {'documento': documento, 'contenido': contenido})
+        return render(request, 'documentos/editar_excel.html', {
+            'documento': documento,
+            'contenido': json.dumps(contenido_json)
+        })
 
     else:
         with open(documento.archivo_path.path, 'r', encoding='utf-8') as f:
