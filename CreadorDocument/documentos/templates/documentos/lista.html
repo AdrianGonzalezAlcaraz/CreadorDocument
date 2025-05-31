@@ -430,9 +430,6 @@
         <form method="get" action="{% url 'lista_documentos' %}">
             <button class="crear" style="background: #6b7280;">Ver Todos</button>
         </form>
-        <form method="get" action="{% url 'ordenar_documentos' %}?metodo=nombre">
-            <button>Ordenar por nombre</button>
-        </form>
         {% endif %}
         {% if 'word' in tipos_presentes %}
         <form method="get">
@@ -480,6 +477,11 @@
         <form method="get" action="{% url 'crear_documento' %}">
             <button class="crear">+ Crear Documento</button>
         </form>
+        {% if tipos_presentes %}
+        <form method="get" action="{% url 'ordenar_documentos' %}?metodo=nombre">
+            <button>Ordenar por nombre</button>
+        </form>
+        {% endif %}
         <form method="get" action="{% url 'pdf_a_imagen' %}">
             <button>Transformar PDF en Imágenes</button>
         </form>
