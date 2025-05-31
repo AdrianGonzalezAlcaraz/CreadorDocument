@@ -44,6 +44,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'social_django',
+    # nuevo
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 # Middleware framework
@@ -207,3 +210,12 @@ DATABASES = {
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
+
+#nuevo
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dvh27oqsw',
+    'API_KEY': '897277252968978',
+    'API_SECRET': 'JMkrEbFQ8DOkD8fg5m-S5dt8lCE',
+}
