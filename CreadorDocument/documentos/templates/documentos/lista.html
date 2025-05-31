@@ -426,9 +426,11 @@
     </header>
 
     <div class="filtros">
+        {% if 'word' in tipos_presentes %}
         <form method="get" action="{% url 'lista_documentos' %}">
             <button class="crear" style="background: #6b7280;">Ver Todos</button>
         </form>
+        {% endif %}
         <form method="get">
             <button class="word" name="tipo" value="word">Filtrar Word</button>
         </form>

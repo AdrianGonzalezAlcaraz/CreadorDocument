@@ -66,12 +66,13 @@ def obtener_nombre_archivo_con_extension(titulo, extension):
 def lista_documentos(request):
     tipo = request.GET.get('tipo')  # word, excel, etc.
     documentos = Documento.objects.filter(usuario=request.user)
+    tipos_presentes = set(documentos.values_list('extension', flat=True))
     if tipo:
         if tipo == "word":
             documentos = documentos.filter(extension__in=['word', 'txt'])
         else:
             documentos = documentos.filter(extension=tipo)
-    return render(request, 'documentos/lista.html', {'documentos': documentos})
+    return render(request, 'documentos/lista.html', {'documentos': documentos, 'tipos_presentes': tipos_presentes})
 
 @login_required
 def crear_documento(request):
