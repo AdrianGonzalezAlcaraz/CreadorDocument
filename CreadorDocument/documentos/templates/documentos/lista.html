@@ -426,35 +426,49 @@
     </header>
 
     <div class="filtros">
-        {% if 'word' in tipos_presentes %}
+        {% if tipos_presentes %}
         <form method="get" action="{% url 'lista_documentos' %}">
             <button class="crear" style="background: #6b7280;">Ver Todos</button>
         </form>
+        <form method="get" action="{% url 'ordenar_documentos' %}?metodo=nombre">
+            <button>Ordenar por nombre</button>
+        </form>
         {% endif %}
+        {% if 'word' in tipos_presentes %}
         <form method="get">
             <button class="word" name="tipo" value="word">Filtrar Word</button>
         </form>
+        {% endif %}
+        {% if 'excel' in tipos_presentes %}
         <form method="get">
             <button class="excel" name="tipo" value="excel">Filtrar Excel</button>
         </form>
+        {% endif %}
+        {% if 'html' in tipos_presentes %}
         <form method="get">
             <button class="html" name="tipo" value="html">Filtrar HTML</button>
         </form>
+        {% endif %}
+        {% if 'css' in tipos_presentes %}
         <form method="get">
             <button class="css" name="tipo" value="css">Filtrar CSS</button>
         </form>
+        {% endif %}
+        {% if 'ppt' in tipos_presentes %}
         <form method="get">
             <button class="presentacion" name="tipo" value="ppt">Filtrar Presentación</button>
         </form>
+        {% endif %}
+        {% if 'js' in tipos_presentes %}
         <form method="get">
             <button class="javascript" name="tipo" value="JavaScript">Filtrar JavaScript</button>
         </form>
+        {% endif %}
+        {% if 'php' in tipos_presentes %}
         <form method="get">
             <button class="php" name="tipo" value="php">Filtrar PHP</button>
         </form>
-        <form method="get" action="{% url 'crear_documento' %}">
-            <button class="crear">+ Crear Documento</button>
-        </form>
+        {% endif %}
     </div>
 
     <div class="acciones-superiores">
@@ -463,8 +477,8 @@
             <input type="file" name="archivo" required>
             <button type="submit">Importar Documento</button>
         </form>
-        <form method="get" action="{% url 'ordenar_documentos' %}?metodo=nombre">
-            <button>Ordenar por nombre</button>
+        <form method="get" action="{% url 'crear_documento' %}">
+            <button class="crear">+ Crear Documento</button>
         </form>
         <form method="get" action="{% url 'pdf_a_imagen' %}">
             <button>Transformar PDF en Imágenes</button>
